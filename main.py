@@ -1,10 +1,11 @@
 import pygame
+import buttons
 
 
 # set up pygame modules
 pygame.init()
 pygame.font.init()
-title_font = pygame.font.Font('LombardicNarrow-GvWG.ttf', 100)
+title_font = pygame.font.Font('C:/Users/bt_4n2_01/Downloads/Imperialize-main/Imperialize-main/fonts/LombardicNarrow-GvWG.ttf', 100)
 pygame.display.set_caption("AP CSP Pygame!")
 
 
@@ -13,6 +14,8 @@ size = (800, 600)
 screen = pygame.display.set_mode(size)
 background_color = (98, 130, 122)
 title = "Imperialize"
+
+start_button = buttons.StartButton(100, 100, 200, 400, (255, 255, 255))
 
 # render the text for later
 display_title = title_font.render(title, True, (255, 255, 255))
@@ -34,7 +37,8 @@ while run:
 # Blit
     screen.fill((98, 130, 122))
     # screen.blit(map_background, (0,0))
-    screen.blit(display_title, (0,00))
+    screen.blit(display_title, (0, 0))
+    pygame.draw.rect(screen, start_button.color, start_button)
     pygame.display.update()
 
 
