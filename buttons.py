@@ -15,4 +15,5 @@ class StartButton(Button):
         self.color = color
 
     def on_click(self):
-        print('clicked')
+        return "naming"
+
