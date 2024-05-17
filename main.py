@@ -5,9 +5,9 @@ import buttons
 # set up pygame modules
 pygame.init()
 pygame.font.init()
-title_font = pygame.font.Font('C:/Users/bt_4n2_01/Downloads/Imperialize-main/Imperialize-main/fonts/LombardicNarrow-GvWG.ttf', 100)
-reg_font = pygame.font.Font('C:/Users/bt_4n2_01/Downloads/Imperialize-main/Imperialize-main/fonts/LombardicNarrow-GvWG.ttf', 50)
-smaller_font = pygame.font.Font('C:/Users/bt_4n2_01/Downloads/Imperialize-main/Imperialize-main/fonts/LombardicNarrow-GvWG.ttf', 30)
+title_font = pygame.font.Font('fonts/LombardicNarrow-GvWG.ttf', 100)
+reg_font = pygame.font.Font('fonts/LombardicNarrow-GvWG.ttf', 50)
+smaller_font = pygame.font.Font('fonts/LombardicNarrow-GvWG.ttf', 30)
 
 pygame.display.set_caption("AP CSP Pygame!")
 
@@ -16,7 +16,7 @@ pygame.display.set_caption("AP CSP Pygame!")
 size = (800, 600)
 screen = pygame.display.set_mode(size)
 background_color = (98, 130, 122)
-page = "main_game"
+page = "naming"
 
 # start screen
 title = "Imperialize"
@@ -25,13 +25,18 @@ sbtn_y = 350
 start_button = buttons.StartButton(sbtn_x, sbtn_y, 200, 70, (255, 255, 255))
 sbtn_text = "Start"
 
-# main game screen
+# naming screen
 name = ""
 input_text = ""
 name_prompt = "Enter your name"
 text_box_x = 240
 text_box_y = 300
 text_box = pygame.Rect(text_box_x, text_box_y, 300, 50)
+is_exceeding_len = False
+no_input = False
+name_message = "Max 20 Characters"
+display_name_message = smaller_font.render(name_message, True, (255, 0, 0))
+enter_btn = buttons.Button(text_box_x + 60, text_box_y + 60, 180, 50, (255, 0, 255))
 
 # render the text for later
 display_title = title_font.render(title, True, (255, 255, 255))
@@ -53,9 +58,17 @@ while run:
             if event.type == pygame.MOUSEBUTTONUP and start_button.rect.collidepoint(event.pos):
                 page = start_button.on_click()
         if page == "naming":
-            if event.type == pygame.KEYUP:
-                input_text += event.key
-                display_input_text = smaller_font.render(input_text, True, (0, 0, 0))
+            if event.type == pygame.KEYUP and not name:
+                if len(input_text) < 19:
+                    input_text += event.unicode
+                    display_input_text = smaller_font.render(input_text, True, (0, 0, 0))
+                elif len(input_text) == 19:
+                    is_exceeding_len = True
+            if event.type == pygame.MOUSEBUTTONUP and enter_btn.rect.collidepoint(event.pos):
+                if not input_text:
+                    name = input_text
+                print(name)
+
 
 # Blit
     screen.fill((98, 130, 122))
@@ -67,8 +80,13 @@ while run:
     if page == "naming":
         screen.blit(display_name_prompt, (text_box_x - 30, text_box_y - 70))
         pygame.draw.rect(screen, (255, 255, 255), text_box)
+        pygame.draw.rect(screen, enter_btn.color, enter_btn)
         if input_text:
-            screen.blit(display_input_text, (text_box_x - 30, text_box_y - 70))
+            screen.blit(display_input_text, (text_box_x + 10, text_box_y + 10))
+        if is_exceeding_len:
+            screen.blit(display_name_message, (text_box_x + 10, text_box_y + 70))
+
+
     pygame.display.update()
 
 
