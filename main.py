@@ -16,7 +16,7 @@ pygame.display.set_caption("AP CSP Pygame!")
 size = (800, 600)
 screen = pygame.display.set_mode(size)
 background_color = (98, 130, 122)
-page = "naming"
+page = "main_game"
 
 # start screen
 title = "Imperialize"
@@ -25,7 +25,7 @@ sbtn_y = 350
 start_button = buttons.StartButton(sbtn_x, sbtn_y, 200, 70, (255, 255, 255))
 sbtn_text = "Start"
 
-# naming screen
+# input name
 name = ""
 input_text = ""
 name_prompt = "Enter your name"
@@ -36,7 +36,9 @@ is_exceeding_len = False
 no_input = False
 name_message = "Max 20 Characters"
 display_name_message = smaller_font.render(name_message, True, (255, 0, 0))
-enter_btn = buttons.Button(text_box_x + 60, text_box_y + 60, 180, 50, (255, 0, 255))
+enter_btn = buttons.Button(text_box_x + 60, text_box_y + 60, 180, 50, (255, 100, 255))
+enter_btn_txt = "Enter"
+display_enter_txt = smaller_font.render(enter_btn_txt, True, (255, 255, 255))
 
 # render the text for later
 display_title = title_font.render(title, True, (255, 255, 255))
@@ -65,9 +67,8 @@ while run:
                 elif len(input_text) == 19:
                     is_exceeding_len = True
             if event.type == pygame.MOUSEBUTTONUP and enter_btn.rect.collidepoint(event.pos):
-                if not input_text:
+                if input_text:
                     name = input_text
-                print(name)
 
 
 # Blit
@@ -78,13 +79,17 @@ while run:
         pygame.draw.rect(screen, start_button.color, start_button)
         screen.blit(display_sbtn_text, (sbtn_x + 50, sbtn_y + 10))
     if page == "naming":
-        screen.blit(display_name_prompt, (text_box_x - 30, text_box_y - 70))
-        pygame.draw.rect(screen, (255, 255, 255), text_box)
-        pygame.draw.rect(screen, enter_btn.color, enter_btn)
-        if input_text:
-            screen.blit(display_input_text, (text_box_x + 10, text_box_y + 10))
-        if is_exceeding_len:
-            screen.blit(display_name_message, (text_box_x + 10, text_box_y + 70))
+        if not name:
+            screen.blit(display_name_prompt, (text_box_x - 30, text_box_y - 70))
+            pygame.draw.rect(screen, (255, 255, 255), text_box)
+            pygame.draw.rect(screen, enter_btn.color, enter_btn)
+            screen.blit(display_enter_txt, (text_box_x + 115, text_box_y + 70))
+            if input_text:
+                screen.blit(display_input_text, (text_box_x + 10, text_box_y + 10))
+            if is_exceeding_len:
+                screen.blit(display_name_message, (text_box_x + 10, text_box_y + 70))
+    if page == "main_game":
+
 
 
     pygame.display.update()
