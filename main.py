@@ -1,5 +1,6 @@
 import pygame
 import buttons
+import sprites.colonies
 
 
 # set up pygame modules
@@ -24,27 +25,12 @@ sbtn_x = 280
 sbtn_y = 350
 start_button = buttons.StartButton(sbtn_x, sbtn_y, 200, 70, (255, 255, 255))
 sbtn_text = "Start"
-
-# input name
-name = ""
-input_text = ""
-name_prompt = "Enter your name"
-text_box_x = 240
-text_box_y = 300
-text_box = pygame.Rect(text_box_x, text_box_y, 300, 50)
-is_exceeding_len = False
-no_input = False
-name_message = "Max 20 Characters"
-display_name_message = smaller_font.render(name_message, True, (255, 0, 0))
-enter_btn = buttons.Button(text_box_x + 60, text_box_y + 60, 180, 50, (255, 100, 255))
-enter_btn_txt = "Enter"
-display_enter_txt = smaller_font.render(enter_btn_txt, True, (255, 255, 255))
-
-# render the text for later
 display_title = title_font.render(title, True, (255, 255, 255))
 display_sbtn_text = reg_font.render(sbtn_text, True, (0, 0, 0))
-display_name_prompt = reg_font.render(name_prompt, True, (255, 255, 255))
-display_input_text = smaller_font.render(input_text, True, (0, 0, 0))
+
+# colony selection
+nec = sprites.colonies.Colony(50,50,"Imperialize/sprite_images/new_england_colonies.png")
+
 
 # The loop will carry on until the user exits the game (e.g. clicks the close button).
 run = True
@@ -58,18 +44,7 @@ while run:
             run = False
         if page == "start":
             if event.type == pygame.MOUSEBUTTONUP and start_button.rect.collidepoint(event.pos):
-                page = start_button.on_click()
-        if page == "naming":
-            if event.type == pygame.KEYUP and not name:
-                if len(input_text) < 19:
-                    input_text += event.unicode
-                    display_input_text = smaller_font.render(input_text, True, (0, 0, 0))
-                elif len(input_text) == 19:
-                    is_exceeding_len = True
-            if event.type == pygame.MOUSEBUTTONUP and enter_btn.rect.collidepoint(event.pos):
-                if input_text:
-                    name = input_text
-
+                page = "main_game"
 
 # Blit
     screen.fill((98, 130, 122))
@@ -78,17 +53,9 @@ while run:
         screen.blit(display_title, (170, 150))
         pygame.draw.rect(screen, start_button.color, start_button)
         screen.blit(display_sbtn_text, (sbtn_x + 50, sbtn_y + 10))
-    if page == "naming":
-        if not name:
-            screen.blit(display_name_prompt, (text_box_x - 30, text_box_y - 70))
-            pygame.draw.rect(screen, (255, 255, 255), text_box)
-            pygame.draw.rect(screen, enter_btn.color, enter_btn)
-            screen.blit(display_enter_txt, (text_box_x + 115, text_box_y + 70))
-            if input_text:
-                screen.blit(display_input_text, (text_box_x + 10, text_box_y + 10))
-            if is_exceeding_len:
-                screen.blit(display_name_message, (text_box_x + 10, text_box_y + 70))
     if page == "main_game":
+        screen.blit(nec.image, nec.rect)
+
 
 
 
