@@ -1,12 +1,12 @@
 import pygame
 import buttons
-import sprites.colonies
+import colonies
 
 
 # set up pygame modules
 pygame.init()
 pygame.font.init()
-title_font = pygame.font.Font('fonts/LombardicNarrow-GvWG.ttf', 100)
+title_font = pygame.font.Font('fonts/LombardicNarrow-GvWG.ttf', 200)
 reg_font = pygame.font.Font('fonts/LombardicNarrow-GvWG.ttf', 50)
 smaller_font = pygame.font.Font('fonts/LombardicNarrow-GvWG.ttf', 30)
 
@@ -14,22 +14,27 @@ pygame.display.set_caption("AP CSP Pygame!")
 
 
 # set up variables for the display
-size = (800, 600)
+screen_w = 1200
+screen_h = 1000
+size = (screen_w, screen_h)
 screen = pygame.display.set_mode(size)
 background_color = (98, 130, 122)
 page = "main_game"
 
 # start screen
 title = "Imperialize"
-sbtn_x = 280
-sbtn_y = 350
-start_button = buttons.StartButton(sbtn_x, sbtn_y, 200, 70, (255, 255, 255))
+sbtn_x = screen_w/2.45
+sbtn_y = screen_h/2
+start_button = buttons.Button(sbtn_x, sbtn_y, 200, 70, (255, 255, 255))
 sbtn_text = "Start"
 display_title = title_font.render(title, True, (255, 255, 255))
 display_sbtn_text = reg_font.render(sbtn_text, True, (0, 0, 0))
 
 # colony selection
-nec = sprites.colonies.Colony(50,50,"Imperialize/sprite_images/new_england_colonies.png")
+nec_x = screen_w/2.2
+nec_y = screen_h/40
+nec = colonies.Colony(nec_x, nec_y, 1, "sprite_images/new_england_colonies.png")
+mc = colonies.Colony(nec_x-250, nec_y+115, 1.18, "sprite_images/middle_colonies.png")
 
 
 # The loop will carry on until the user exits the game (e.g. clicks the close button).
@@ -50,11 +55,12 @@ while run:
     screen.fill((98, 130, 122))
     # screen.blit(map_background, (0,0))
     if page == "start":
-        screen.blit(display_title, (170, 150))
+        screen.blit(display_title, (screen_w/8, screen_h/3.7))
         pygame.draw.rect(screen, start_button.color, start_button)
         screen.blit(display_sbtn_text, (sbtn_x + 50, sbtn_y + 10))
     if page == "main_game":
         screen.blit(nec.image, nec.rect)
+        screen.blit(mc.image, mc.rect)
 
 
 
