@@ -32,9 +32,11 @@ display_sbtn_text = reg_font.render(sbtn_text, True, (0, 0, 0))
 
 # colony selection
 nec_x = screen_w/2.2
-nec_y = screen_h/40
-nec = colonies.Colony(nec_x, nec_y, 1, "sprite_images/new_england_colonies.png")
-mc = colonies.Colony(nec_x-250, nec_y+115, 1.18, "sprite_images/middle_colonies.png")
+nec_y = -80
+nec = colonies.Colony(nec_x, nec_y, .95, "sprite_images/new_england_colonies.png")
+mc = colonies.Colony(nec_x-200, nec_y+130, 1, "sprite_images/middle_colonies.png")
+sc = colonies.Colony(nec_x-355, nec_y+500, 1.13, "sprite_images/southern_colonies.png")
+
 
 
 # The loop will carry on until the user exits the game (e.g. clicks the close button).
@@ -50,6 +52,16 @@ while run:
         if page == "start":
             if event.type == pygame.MOUSEBUTTONUP and start_button.rect.collidepoint(event.pos):
                 page = "main_game"
+        if page == "main_game":
+            if event.type == pygame.MOUSEMOTION:
+                if nec.rect.collidepoint(event.pos):
+                    print("hovering: nec")
+                elif mc.rect.collidepoint(event.pos):
+                    print("hovering: mc")
+                elif sc.rect.collidepoint(event.pos):
+                    print("hovering: sc")
+
+
 
 # Blit
     screen.fill((98, 130, 122))
@@ -61,6 +73,7 @@ while run:
     if page == "main_game":
         screen.blit(nec.image, nec.rect)
         screen.blit(mc.image, mc.rect)
+        screen.blit(sc.image, sc.rect)
 
 
 
