@@ -21,6 +21,12 @@ screen = pygame.display.set_mode(size)
 background_color = (98, 130, 122)
 page = "main_game"
 
+# Coord Cursor
+x = 0
+y = 0
+position = f"({x}, {y}"
+display_position = smaller_font.render(position, True, (255, 255, 255))
+
 # start screen
 title = "Imperialize"
 sbtn_x = screen_w/2.45
@@ -33,9 +39,11 @@ display_sbtn_text = reg_font.render(sbtn_text, True, (0, 0, 0))
 # colony selection
 nec_x = screen_w/2.2
 nec_y = -80
-nec = colonies.Colony(nec_x, nec_y, .95, "sprite_images/new_england_colonies.png")
-mc = colonies.Colony(nec_x-200, nec_y+130, 1, "sprite_images/middle_colonies.png")
-sc = colonies.Colony(nec_x-355, nec_y+500, 1.13, "sprite_images/southern_colonies.png")
+nec = colonies.Nec(nec_x, nec_y, "sprite_images/new_england_colonies.png")
+nec.scale_image(.95)
+mc = colonies.Mc(nec_x-200, nec_y+130,"sprite_images/middle_colonies.png")
+sc = colonies.Sc(nec_x-355, nec_y+500,"sprite_images/southern_colonies.png")
+sc.scale_image(1.13)
 
 
 
@@ -47,6 +55,10 @@ run = True
 while run:
     # --- Main event loop
     for event in pygame.event.get():  # User did something
+        if event.type == pygame.MOUSEMOTION:
+            (x, y) = event.pos
+            position = f"({x}, {y}"
+            display_position = smaller_font.render(position, True, (255, 255, 255))
         if event.type == pygame.QUIT:  # If user clicked close
             run = False
         if page == "start":
@@ -66,13 +78,14 @@ while run:
 # Blit
     screen.fill((98, 130, 122))
     # screen.blit(map_background, (0,0))
+    screen.blit(display_position, (x+10, y+5))
     if page == "start":
         screen.blit(display_title, (screen_w/8, screen_h/3.7))
         pygame.draw.rect(screen, start_button.color, start_button)
         screen.blit(display_sbtn_text, (sbtn_x + 50, sbtn_y + 10))
     if page == "main_game":
-        screen.blit(nec.image, nec.rect)
-        screen.blit(mc.image, mc.rect)
+        screen.blit(nec.image, (nec.rect[0]-135, nec.rect[1]))
+        screen.blit(mc.image, (mc.rect[0]-65, mc.rect[1]))
         screen.blit(sc.image, sc.rect)
 
 
