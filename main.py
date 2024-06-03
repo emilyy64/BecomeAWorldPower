@@ -6,7 +6,7 @@ from display_vars import screen, screen_h, screen_w
 
 # set up variables for the display
 background_color = (98, 130, 122)
-page = "colony_selection"
+page = "start"
 
 # Coord Cursor
 x = 0
@@ -32,6 +32,10 @@ selected_colony_name = ""
 selected_colony = ""
 confirm_btn = ConfirmButton(1530, 750, 350, 100, (255,255,255), "Confirm")
 
+# testing
+page = "colony_selection"
+# selected_colony = nec
+###############################
 
 # The loop will carry on until the user exits the game (e.g. clicks the close button).
 run = True
@@ -73,23 +77,23 @@ while run:
     # screen.blit(map_background, (0,0))
 
     if page == "start":
-        screen.blit(display_title, (screen_h/2 + 50, screen_h/3.7))
+        screen.blit(display_title, (screen_w/2 + 50, screen_h/3.7))
         start_button.draw()
     if page == "colony_selection":
         screen.blit(display_cstitle, (20, 20))
-        nec.draw()
-        mc.draw()
-        sc.draw()
-        if (nec_hover or selected_colony_name == "nec") and selected_colony_name not in ("sc","mc"):
-            nec.blit_info()
-        elif (mc_hover or selected_colony_name == "mc") and selected_colony_name not in ("nec","sc"):
-            mc.blit_info()
-        elif (sc_hover or selected_colony_name == "sc") and selected_colony_name not in ("nec","mc"):
-            sc.blit_info()
+        nec.draw(-135, 0)
+        mc.draw(-65, 0)
+        sc.draw(0, 0)
+        if (nec_hover or selected_colony_name == "nec") and selected_colony_name not in ("sc", "mc"):
+            nec.blit_info(340, 140)
+        elif (mc_hover or selected_colony_name == "mc") and selected_colony_name not in ("nec", "sc"):
+            mc.blit_info(540, 140)
+        elif (sc_hover or selected_colony_name == "sc") and selected_colony_name not in ("nec", "mc"):
+            sc.blit_info(640, 140)
         if selected_colony_name:
             confirm_btn.draw()
     if page == "intro":
-        screen.blit(selected_colony.name_display, (selected_colony.x, selected_colony.y + 80))
+        selected_colony.blit_intro_desc()
     screen.blit(display_position, (x+10, y+5))
     pygame.display.update()
 
