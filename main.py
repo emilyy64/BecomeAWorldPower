@@ -33,7 +33,7 @@ selected_colony = ""
 confirm_btn = ConfirmButton(1530, 750, 350, 100, (255,255,255), "Confirm")
 
 # testing
-page = "colony_selection"
+page = "main"
 # selected_colony = nec
 ###############################
 
@@ -94,6 +94,8 @@ while run:
             confirm_btn.draw()
     if page == "intro":
         selected_colony.blit_intro_desc()
+    if page == "main":
+        pass
     screen.blit(display_position, (x+10, y+5))
     pygame.display.update()
 

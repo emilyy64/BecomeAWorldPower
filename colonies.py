@@ -9,6 +9,10 @@ class Colony:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.health = 100
+        self.happiness = 100
+        self.money = 1000
+
 
     def scale_image(self, scale):
         scale_size = (self.image_size[0] * scale, self.image_size[1] * scale)
@@ -46,6 +50,9 @@ class Nec(Colony):
         self.desc = ["Colonies: New Hampshire, Massachusetts, Rhode Island, Connecticut", "Environment: Rocky terrain, harsh climate", "Economy: Fishing, Lumbering, Minimal farming for personal needs"]
         self.intro_text = "insert description"
 
+        self.pop = 15000
+        self.storage = []
+
 
 class Mc(Colony):
     def __init__(self, x, y):
@@ -59,6 +66,9 @@ class Mc(Colony):
         self.name_display = larger_font.render(self.name, True, (255, 255, 255))
         self.desc = ["Colonies: New York, Pennysylvania, New Jersey, Delaware", "Environment: Fertile soil. Location makes these colonies important distribution centers", "Economy: Ship building, lumber, wheat, grains"]
         self.intro_text = "insert description"
+
+        self.pop = 15000
+        self.storage = []
 
 
 class Sc(Colony):
@@ -75,6 +85,11 @@ class Sc(Colony):
         self.desc = ["Colonies: Virginia, North Carolina, South Carolina, Georgia", "Environment: Mostly plains, good for farming", "Economy: Majorly agricultural, plantations"]
         self.intro_text = "insert description"
 
+        self.pop = 10000
+        self.storage = []
 
+
+nec = Nec(100,100)
+print(nec.health)
 
 
