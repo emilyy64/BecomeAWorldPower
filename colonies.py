@@ -1,5 +1,5 @@
 import pygame
-from fonts import larger_font, page_head_font
+from fonts import larger_font, page_head_font, reg_font
 from blit_lines import blit_lines
 from display_vars import screen, screen_w
 
@@ -12,7 +12,9 @@ class Colony:
         self.health = 100
         self.happiness = 100
         self.money = 1000
-
+        self.health_display = reg_font.render(str(self.health), True, (255,255,255))
+        self.happiness_display = reg_font.render(str(self.happiness), True, (255,255,255))
+        self.money_display = reg_font.render(str(self.money), True, (255,255,255))
 
     def scale_image(self, scale):
         scale_size = (self.image_size[0] * scale, self.image_size[1] * scale)
@@ -51,7 +53,11 @@ class Nec(Colony):
         self.intro_text = "insert description"
 
         self.pop = 15000
-        self.storage = []
+        self.storage = {
+            "wood" : 100,
+            "food" : 80,
+        }
+        self.pop_display = reg_font.render(str(self.pop), True, (255,255,255))
 
 
 class Mc(Colony):
@@ -68,7 +74,10 @@ class Mc(Colony):
         self.intro_text = "insert description"
 
         self.pop = 15000
-        self.storage = []
+        self.storage = {
+            "food": 100,
+        }
+        self.pop_display = reg_font.render(str(self.pop), True, (255,255,255))
 
 
 class Sc(Colony):
@@ -86,7 +95,10 @@ class Sc(Colony):
         self.intro_text = "insert description"
 
         self.pop = 10000
-        self.storage = []
+        self.storage = {
+            "food": 100
+        }
+        self.pop_display = reg_font.render(str(self.pop), True, (255,255,255))
 
 
 nec = Nec(100,100)
