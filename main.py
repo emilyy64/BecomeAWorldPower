@@ -42,8 +42,8 @@ next_btn = ChangePageButton(screen_w/2.5, 750, 350, 100, (255,255,255), "Next", 
 week = 1
 
 # testing
-page = "main"
-selected_colony = nec
+# page = "main"
+# selected_colony = nec
 ###############################
 
 
