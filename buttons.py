@@ -69,6 +69,7 @@ class CloseBtn(ImageButton):
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONUP and self.rect.collidepoint(event.pos):
+            print("clicked")
             return False
         else:
             return True
@@ -81,10 +82,42 @@ class RequestButton(ImageButton):
         if event.type == pygame.MOUSEBUTTONUP and self.rect.collidepoint(event.pos):
             return True
 
-class CompleteTaskBtn(TextButton):
+class OpenRequestButton(TextButton):
     def __init__(self, x, y, w, h, color, label):
         super().__init__(x, y, w, h, color, label)
-
-    def handle_event(self, event, requests: list):
+    
+    def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONUP and self.rect.collidepoint(event.pos):
-            requests.remove(1)
+            return True
+    
+    def draw(self, x):
+        pygame.draw.rect(screen, self.color, self)
+        screen.blit(self.label_display, (self.x + x, self.y))
+    
+class AcceptButton(TextButton):
+    def __init__(self, x, y, w, h, color, label):
+        super().__init__(x, y, w, h, color, label)
+    
+    def handle_event(self, event, request, colony, requests):
+        if event.type == pygame.MOUSEBUTTONUP and self.rect.collidepoint(event.pos):
+            request.on_confirm(colony)
+            colony.update_stat_displays()
+            requests.pop(request.index)
+            return True
+        else:
+            return False
+            
+
+class RejectButton(TextButton):
+    def __init__(self, x, y, w, h, color, label):
+        super().__init__(x, y, w, h, color, label)
+    
+    def handle_event(self, event, request, colony, requests):
+        if event.type == pygame.MOUSEBUTTONUP and self.rect.collidepoint(event.pos):
+            request.on_reject(colony)
+            colony.update_stat_displays()
+            requests.pop(request.index)
+            return True
+        else:
+            return False
+        

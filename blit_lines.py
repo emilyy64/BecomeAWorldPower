@@ -32,11 +32,11 @@ def line_sentence(sentence, w):
     lines.append(line)
     return lines
 
-def blit_lines(sentence, x, y, w):
+def blit_lines(sentence, x, y, w, color):
     lines = line_sentence(sentence_list(sentence), w)
     displays = []
     for line in lines:
-        displays.append(reg_font.render(line, True, (255,255,255)))
+        displays.append(reg_font.render(line, True, color))
     for display in displays:
         screen.blit(display, (x ,y))
         y += 40

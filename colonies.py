@@ -15,7 +15,15 @@ class Colony:
         self.health_display = reg_font.render(str(self.health), True, (255,255,255))
         self.happiness_display = reg_font.render(str(self.happiness), True, (255,255,255))
         self.money_display = reg_font.render(str(self.money), True, (255,255,255))
+        self.pop = 0
+        self.pop_growth_rate = 1.02
 
+    def update_stat_displays(self):
+        self.health_display = reg_font.render(str(self.health), True, (255,255,255))
+        self.happiness_display = reg_font.render(str(self.happiness), True, (255,255,255))
+        self.money_display = reg_font.render(str(self.money), True, (255,255,255))
+        self.pop_display = reg_font.render(str(self.pop), True, (255, 255, 255))
+    
     def scale_image(self, scale):
         scale_size = (self.image_size[0] * scale, self.image_size[1] * scale)
         self.image = pygame.transform.scale(self.image, scale_size)
@@ -34,7 +42,7 @@ class Colony:
     def blit_intro_desc(self):
         screen.blit(self.big_name_display, self.title_center)
         start_y = self.y + 200
-        num_lines = blit_lines(self.intro_text, screen_w/15, 150, 1000)
+        num_lines = blit_lines(self.intro_text, screen_w/15, 150, 1000, (255, 255, 255))
         start_y += num_lines*45
 
 
