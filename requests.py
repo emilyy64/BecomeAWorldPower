@@ -34,7 +34,6 @@ class Request1(Request):
     def __init__(self, x, y, w, sender, index):
         super().__init__(x, y, w, sender, index)
         self.update_self(f"{sender} requests food")
-
     
     def on_confirm(self, colony):
         colony.storage["food"] -= 10
@@ -42,6 +41,7 @@ class Request1(Request):
     
     def on_reject(self, colony):
         colony.happiness -= 10
+
 
 class Request2(Request):
     def __init__(self, x, y, w, sender, index):
@@ -54,6 +54,7 @@ class Request2(Request):
     
     def on_reject(self, colony):
         colony.happiness += 10
+
 
 class Request3(Request):
     def __init__(self, x, y, w, sender, index):

@@ -17,6 +17,27 @@ class Colony:
         self.money_display = reg_font.render(str(self.money), True, (255,255,255))
         self.pop = 0
         self.pop_growth_rate = 1.02
+        self.weekly_report = {
+            "Money" : 0,
+            "Health" : 0,
+            "Happiness" : 0,
+            "Population" : 0,
+            "Food" : 0
+        }
+        self.seasonal_report = {
+            "Money" : 0,
+            "Health" : 0,
+            "Happiness" : 0,
+            "Population" : 0,
+            "Food" : 0
+        }
+        self.annual_report = {
+            "Money" : 0,
+            "Health" : 0,
+            "Happiness" : 0,
+            "Population" : 0,
+            "Food" : 0
+        }
 
     def update_stat_displays(self):
         self.health_display = reg_font.render(str(self.health), True, (255,255,255))
@@ -36,7 +57,7 @@ class Colony:
         screen.blit(self.name_display, (self.x + change_x, self.y + change_y))
         start_y = self.y + 200
         for i in self.desc:
-            num_lines = blit_lines(i, self.x + change_x + 20, start_y, 300)
+            num_lines = blit_lines(i, self.x + change_x + 20, start_y, 300, (255, 255, 255))
             start_y += num_lines * 45
 
     def blit_intro_desc(self):
@@ -62,7 +83,6 @@ class Nec(Colony):
 
         self.pop = 15000
         self.storage = {
-            "wood" : 100,
             "food" : 80,
         }
         self.pop_display = reg_font.render(str(self.pop), True, (255,255,255))
