@@ -69,7 +69,6 @@ class CloseBtn(ImageButton):
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONUP and self.rect.collidepoint(event.pos):
-            print("clicked")
             return False
         else:
             return True
@@ -120,4 +119,14 @@ class RejectButton(TextButton):
             return True
         else:
             return False
+        
+class NextButton(TextButton):
+    def __init__(self, x, y, w, h, color, label):
+        super().__init__(x, y, w, h, color, label)
+    
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONUP and self.rect.collidepoint(event.pos):
+            return False
+        else:
+            return True
         

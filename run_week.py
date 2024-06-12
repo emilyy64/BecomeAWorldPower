@@ -21,7 +21,7 @@ accept_btn = AcceptButton(screen_w/3.5 + 40, 560, 250, 100, (0, 255, 0), "Accept
 reject_btn = RejectButton(screen_w/3.5 + (screen_w - (screen_w/3.5)*2) - 300, 560, 250, 100, (255, 0, 0), "Reject")
 request_completed = False
 
-def run_week(week, colony, run):
+def run_week(week, season, colony):
     colonists = ["George Cleanington", "James Wonroe", "Alexander Beefington", "John Blue", "Benny Franklin", "Thomas Pain", "Roger Sureman", "James Willson", "John John", "Henry Roberts", "Mary Jane", "Sarah Michaels", "Susannah Smith", "Jane White", "Jane Franklin", "Madison Jackson" ]
     week_over = False
     show_storage = False
@@ -29,23 +29,27 @@ def run_week(week, colony, run):
     is_request_open = False
     requests = []
     active_request = None
+    if week in [5, 9, 13]:
+        for key, value in colony.weekly_report.items():
+            colony.seasonal_report[key] = 0
+        colony.money += 200
+        colony.storage["food"] += 100
+        colony.update_seasonal_report(["money", "food"], [200, 100])
+        colony.update_annual_report(["money", "food"], [200, 100])
+        colony.update_stat_displays()
+        pygame.display.update()        
+    for key, value in colony.weekly_report.items():
+        colony.weekly_report[key] = 0
     for i in range(3):
         x = rb_x + (rb_w/3)*i + 60
         rand_req = request_types[random.randint(0, len(request_types)-1)]
         rand_sender = colonists[random.randint(0, len(colonists) - 1)]
         requests.append(rand_req(x, 240, rb_w/3 - 110, rand_sender, i))
-    if week > 0 and week < 5:
-        season = "Spring"
-    if week > 4 and week < 9:
-        season = "Summer"
-    if week > 8 and week < 13:
-        season = "Fall"
-    if week > 12 and week < 17:
-        season = "Winter"
-    while not week_over and run:
+
+    while not week_over:
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT:
-                run = False
+                pygame.quit()
             is_popup = False if not show_storage and not show_requests and not is_request_open else True
             
             if not is_popup:
@@ -79,8 +83,14 @@ def run_week(week, colony, run):
                     for request in requests:
                         request.show = False
             if not requests:
+                prev_pop = colony.pop
                 colony.pop = int(round(colony.pop*colony.pop_growth_rate))
+                pop_change = colony.pop - prev_pop
                 week_over = True
+                colony.update_weekly_report(["population"], [pop_change])
+                for key, value in colony.weekly_report.items():
+                    colony.seasonal_report[key] += value
+                    colony.annual_report[key] += value
                 colony.update_stat_displays()
 
         blit_ui(season, week, colony)
@@ -91,8 +101,6 @@ def run_week(week, colony, run):
         if show_storage:
             storage_popup.draw(close_storage_btn, colony.storage)
         pygame.display.update()
-        
-        if week_over:
-            return True
-    
+    return True
+
     pygame.quit()

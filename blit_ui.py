@@ -21,6 +21,10 @@ close_storage_btn = CloseBtn(storage_popup.x + storage_popup.w - 100, storage_po
 def blit_ui(season, week, colony):
     if week in [5, 9, 13]:
         week = 1
+    elif week in [4, 8, 12, 16]:
+        week = 4
+    else:
+        week = week % 4
     season_display = head_font.render(season, True, (255, 255, 255))
     week_display = head_font.render("Week " + str(week), True, (255, 255, 255))
     screen.fill((98, 130, 122))

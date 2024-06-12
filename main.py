@@ -5,7 +5,7 @@ from fonts import head_font, reg_font, title_font
 from display_vars import screen, screen_h, screen_w
 from popups import Storage, RequestBoard
 from run_week import run_week
-
+from blit_report import blit_report
     
 # set up variables for the display
 background_color = (98, 130, 122)
@@ -14,8 +14,6 @@ page = "start"
 # Coord Cursor
 x = 0
 y = 0
-position = f"({x}, {y})"
-display_position = reg_font.render(position, True, (255, 255, 255))
 
 # start screen
 title = "Imperialize"
@@ -42,8 +40,6 @@ next_btn = ChangePageButton(screen_w/2.5, 750, 350, 100, (255,255,255), "Next", 
 week = 1
 
 # testing
-# page = "main"
-# selected_colony = nec
 ###############################
 
 
@@ -55,10 +51,6 @@ while run:
     # --- Main event loop
     if page != "main":
         for event in pygame.event.get():  # User did something
-            if event.type == pygame.MOUSEMOTION:
-                (x, y) = event.pos
-                position = f"({x}, {y}"
-                display_position = reg_font.render(position, True, (255, 255, 255))
             if event.type == pygame.QUIT:  # If user clicked close
                 run = False
             if page == "start":
@@ -84,10 +76,24 @@ while run:
             if page == "intro":
                 page = next_btn.handle_event(event)
     if page == "main":
-        for i in range(0, 16):
-            run_week(week, selected_colony, run)
+        for i in range(16):
+            if week > 0 and week < 5:
+                season = "Spring"
+            if week > 4 and week < 9:
+                season = "Summer"
+            if week > 8 and week < 13:
+                season = "Fall"
+            if week > 12 and week < 17:
+                season = "Winter"
+            run_week(week, season, selected_colony)
+            if week == 16:
+                blit_report(selected_colony, week, season, "annual")
+                run = False            
+            elif week not in [4, 8, 12]:
+                blit_report(selected_colony, week, season, "weekly")
+            else:
+                blit_report(selected_colony, week, season, "seasonal")
             week += 1
-
 # Blit
     screen.fill(background_color)
     # screen.blit(map_background, (0,0))
@@ -111,8 +117,6 @@ while run:
     if page == "intro":
         selected_colony.blit_intro_desc()
         next_btn.draw(65)
-
-    screen.blit(display_position, (x+10, y+5))
     pygame.display.update()
 
 # Once we have exited the main program loop we can stop the game engine:

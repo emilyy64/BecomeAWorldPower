@@ -18,25 +18,25 @@ class Colony:
         self.pop = 0
         self.pop_growth_rate = 1.02
         self.weekly_report = {
-            "Money" : 0,
-            "Health" : 0,
-            "Happiness" : 0,
-            "Population" : 0,
-            "Food" : 0
+            "money" : 0,
+            "health" : 0,
+            "happiness" : 0,
+            "population" : 0,
+            "food" : 0
         }
         self.seasonal_report = {
-            "Money" : 0,
-            "Health" : 0,
-            "Happiness" : 0,
-            "Population" : 0,
-            "Food" : 0
+            "money" : 0,
+            "health" : 0,
+            "happiness" : 0,
+            "population" : 0,
+            "food" : 0
         }
         self.annual_report = {
-            "Money" : 0,
-            "Health" : 0,
-            "Happiness" : 0,
-            "Population" : 0,
-            "Food" : 0
+            "money" : 0,
+            "health" : 0,
+            "happiness" : 0,
+            "population" : 0,
+            "food" : 0
         }
 
     def update_stat_displays(self):
@@ -65,6 +65,18 @@ class Colony:
         start_y = self.y + 200
         num_lines = blit_lines(self.intro_text, screen_w/15, 150, 1000, (255, 255, 255))
         start_y += num_lines*45
+    
+    def update_weekly_report(self, stats, changes):
+        for i in range(len(stats)):
+            self.weekly_report[stats[i]] += changes[i]
+    
+    def update_seasonal_report(self, stats, changes):
+        for i in range(len(stats)):
+            self.seasonal_report[stats[i]] += changes[i]
+
+    def update_annual_report(self, stats, changes):
+        for i in range(len(stats)):
+            self.annual_report[stats[i]] += changes[i]
 
 
 class Nec(Colony):

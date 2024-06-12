@@ -52,7 +52,7 @@ class RequestPopup(PopUp):
 	def draw(self, close_btn, accept_btn, reject_btn):
 		pygame.draw.rect(screen, self.color, self.rect)
 		screen.blit(self.title_display, (self.x + 40, self.y + 20))
-		blit_lines(self.content, self.x + 40, self.y + 150, 700, (0, 0, 0))
+		blit_lines(self.content, self.x + 40, self.y + 150, 650, (0, 0, 0))
 		close_btn.draw()
 		accept_btn.draw(30)
 		reject_btn.draw(30)
