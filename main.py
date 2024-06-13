@@ -31,10 +31,7 @@ sc = colonies.Sc(nec_x-355, nec_y+500)
 nec_hover = mc_hover = sc_hover = False
 selected_colony_name = ""
 selected_colony = ""
-confirm_btn = ChangePageButton(1530, 750, 350, 100, (255,255,255), "Confirm", "colony_selection", "intro")
-
-#intro
-next_btn = ChangePageButton(screen_w/2.5, 750, 350, 100, (255,255,255), "Next", "intro", "main")
+confirm_btn = ChangePageButton(1530, 750, 350, 100, (255,255,255), "Confirm", "colony_selection", "main")
 
 # main
 week = 1
@@ -73,8 +70,6 @@ while run:
                     else:
                         selected_colony_name = ""
                 page = confirm_btn.handle_event(event)
-            if page == "intro":
-                page = next_btn.handle_event(event)
     if page == "main":
         for i in range(16):
             if week > 0 and week < 5:
@@ -114,9 +109,6 @@ while run:
             sc.blit_info(640, 140)
         if selected_colony_name:
             confirm_btn.draw(65)
-    if page == "intro":
-        selected_colony.blit_intro_desc()
-        next_btn.draw(65)
     pygame.display.update()
 
 # Once we have exited the main program loop we can stop the game engine:
